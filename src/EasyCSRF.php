@@ -28,7 +28,7 @@ class EasyCSRF
      * @return string
      * @throws \Exception
      */
-    public function generate($key): string
+    public function generate(string $key): string
     {
         $key = $result = preg_replace('/[^a-zA-Z0-9]+/', '', $key);
 
@@ -52,7 +52,7 @@ class EasyCSRF
      * @throws MissingTokenException
      * @throws TokenMismatchException
      */
-    public function check($key, $token, $timespan = null, $multiple = false): void
+    public function check(string $key, string $token, int $timespan = null, bool $multiple = false): void
     {
         $key = $result = preg_replace('/[^a-zA-Z0-9]+/', '', $key);
 
@@ -90,13 +90,14 @@ class EasyCSRF
      * @return string
      * @throws \Exception
      */
-    protected function randomString($length): string
+    protected function randomString(int $length): string
     {
         $seed = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijqlmnopqrtsuvwxyz0123456789';
         $max = strlen($seed) - 1;
         $string = '';
         for ($i = 0; $i < $length; ++$i) {
-            $string .= $seed{(int)random_int(0, $max)};
+            //$string .= $seed{(int)random_int(0, $max)};
+            $string .= $seed[intval(mt_rand(0.0, $max))];
         }
 
         return $string;
